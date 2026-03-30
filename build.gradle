@@ -1,0 +1,20 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral ()
+}
+
+dependencies {
+    testImplementation (
+    )
+}
+
+tasks.withtype(javaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJunitPlatform()
+}
