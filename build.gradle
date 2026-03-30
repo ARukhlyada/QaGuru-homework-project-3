@@ -7,11 +7,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation (
-    )
+    testImplementation ("org.junit.jupiter:junit-jupiter:5.14.2")
 }
 
-tasks.withtype(javaCompile) {
+tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
