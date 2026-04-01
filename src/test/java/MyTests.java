@@ -23,8 +23,8 @@ public class MyTests {
         open("/automation-practice-form.html");
 
         // Находим элемент по id и вводим текст
-        $("#firstName").setValue("Иван");
-        $("#lastName").setValue("Петров");
+        $("#firstName").setValue("Вася");
+        $("#lastName").setValue("Васин");
         $("#userEmail").setValue("ivan@example.com");
 
         // Кликаем по radio button (пол)
@@ -32,6 +32,33 @@ public class MyTests {
 
         // Вводим номер телефона
         $("#userNumber").setValue("1234567890");
+
+        // Вводим дату рождения
+        $("dateOfBirthInput").click();
+        $("react-datepicker__month-select").selectOption("July");
+        $(".react-datepicker__year-select").selectOption("1995");
+        $(".react-datepicker__day--015").click();
+
+        // Выбираем предмет
+        $("subjectsInput").click();
+        $(byText("Biology"));
+
+        // Выбор хобби
+        $("hobbies-checkbox-1").parent().click();
+
+        // Загружаем картинку
+        $()
+
+        // Ввод адреса
+        $("currentAddress").setValue("Deathclaw st. 69");
+
+        // Выбор штата
+        $("state").click();
+        $(byText("NCR")).click();
+
+        //выбор города
+        $("#city").click();
+        $(byText("Delhi")).click();
 
         // проверка — поле заполнилось
         $("#firstName").shouldHave(value("Иван"));
