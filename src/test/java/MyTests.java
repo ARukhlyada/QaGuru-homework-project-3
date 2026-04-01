@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -47,7 +49,7 @@ public class MyTests {
         $("hobbies-checkbox-1").parent().click();
 
         // Загружаем картинку
-        $()
+        $("#uploadPicture").uploadFile(new File("src/test/resources/images.png"));
 
         // Ввод адреса
         $("currentAddress").setValue("Deathclaw st. 69");
