@@ -21,8 +21,18 @@ public class MyTests {
     }
 
     @Test
-    void fillFormTest() {
-        open("/automation-practice-form.html");
+    void fillFormWithPopupHandling() {
+        open("https://qa-guru.github.io/one-page-form/automation-practice-form.html");
+
+        // Ждём загрузки страницы и закрываем попап
+        try {
+            // Пытаемся найти и закрыть попап
+            $(".popup-close").shouldBe(visible).click();
+            System.out.println("Попап закрыт");
+        } catch (Throwable e) {
+            // Если попапа нет — идём дальше
+            System.out.println("Попап не обнаружен");
+        }
 
         // Находим элемент по id и вводим текст
         $("#firstName").setValue("Вася");
