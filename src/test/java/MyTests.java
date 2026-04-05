@@ -108,7 +108,7 @@ public class MyTests {
         // Закрываем рекламный попап
         closeAdPopup();
 
-        // Находим элемент по id и вводим текст
+        // заполняем имя и фамилию
         $("#firstName").setValue("Вася");
         $("#lastName").setValue("Васин");
 
@@ -122,15 +122,91 @@ public class MyTests {
         $("#submit").scrollTo().click();
 
         // Проверяем, что модалка открылась
-        $(".modal-content").shouldBe(visible);
+        $("#resultModal").shouldBe(visible);
         // Проверяем каждый элемент
-        $(".modal-body").shouldHave(text("Вася Васин"));
-        $(".modal-body").shouldHave(text("Male"));
-        $(".modal-body").shouldHave(text("1234567890"));
+        $("#resultModal").shouldHave(text("Вася Васин"));
+        $("#resultModal").shouldHave(text("Male"));
+        $("#resultModal").shouldHave(text("1234567890"));
 
         // Закрываем модалку
-        $("#closeLargeModal").click();
+        $("#closeModal").click();
     }
+
+    @Test
+    void NegativeTest1 () {
+        open("https://qa-guru.github.io/one-page-form/automation-practice-form.html");
+
+        // Закрываем рекламный попап
+        closeAdPopup();
+
+        // заполняем ТОЛЬКО имя и фамилию
+        $("#firstName").setValue("Вася");
+        $("#lastName").setValue("Васин");
+
+        // жмем ввод
+        $("#submit").scrollTo().click();
+
+        // Модалка не открыласт
+        $("#resultModal").shouldNotBe(visible);
+
+        //проверка на наличие ошибки
+        $("#formError").shouldHave(cssClass("error"));
+    }
+
+    @Test
+    void NegativeTest2 () {
+        open("https://qa-guru.github.io/one-page-form/automation-practice-form.html");
+
+        // Закрываем рекламный попап
+        closeAdPopup();
+
+        // pfgjkyztv bvz b afvbkb.т
+        $("#firstName").setValue("Вася");
+        $("#lastName").setValue("Васин");
+
+        // Выбор пола
+        $("#gender-radio-1").parent().click();
+
+        // Вводим короткий номер телефона
+        $("#userNumber").setValue("123890");
+
+        // жмем ввод
+        $("#submit").scrollTo().click();
+
+        // Модалка не открыласт
+        $("#resultModal").shouldNotBe(visible);
+
+        //проверка на наличие ошибки
+        $("#formError")
+                .shouldHave(cssClass("error"))
+                .shouldHave(exactText("Please fill required fields and enter a valid 10-digit mobile number"));
+        }
+
+        @Test
+        void NegativeTest3 () { //в системе баг, если не заполнить какое-либо поле, то ошибка будет про некорректный номер, я бы сделал на это автотест, если бы знал какой текст должен был бы быть
+            open("https://qa-guru.github.io/one-page-form/automation-practice-form.html");
+
+            // Закрываем рекламный попап
+            closeAdPopup();
+
+            // Заполянем ТОЛЬКО иммя
+            $("#firstName").setValue("Вася");
+
+            // Выбор пола
+            $("#gender-radio-1").parent().click();
+
+            // Вводим номер телефона
+            $("#userNumber").setValue("1234567890");
+
+            $("#submit").scrollTo().click();
+
+            // Модалка не появилась
+            $("#resultModal").shouldNotBe(visible);
+
+            //проверка на наличие ошибки
+            $("#formError").shouldHave(cssClass("error"));
+        }
+
     // Метод закрытия попапа
     private void closeAdPopup() {
         SelenideElement closeButton = $("button[aria-label='Close']");
