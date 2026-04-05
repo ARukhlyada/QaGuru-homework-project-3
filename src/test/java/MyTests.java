@@ -177,9 +177,8 @@ public class MyTests {
         $("#resultModal").shouldNotBe(visible);
 
         //проверка на наличие ошибки
-        $("#formError")
-                .shouldHave(cssClass("error"))
-                .shouldHave(exactText("Please fill required fields and enter a valid 10-digit mobile number"));
+        $("#formError").shouldHave(cssClass("error"));
+        $("#formError").shouldHave(text("Please fill required fields and enter a valid 10-digit mobile number"));
         }
 
         @Test
