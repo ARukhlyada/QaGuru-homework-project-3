@@ -11,6 +11,7 @@ import java.io.File;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
+import static TestData.TestData.*;
 
 public class MyTests {
 
@@ -33,51 +34,53 @@ public class MyTests {
         open("/automation-practice-form.html");
         // Закрываем рекламный попап
         closeAdPopup();
+
         // Находим элемент по id и вводим текст
-        $("#firstName").setValue("Вася");
-        $("#lastName").setValue("Васин");
-        $("#userEmail").setValue("ivan@example.com");
+        $("#firstName").setValue(firstName);
+        $("#lastName").setValue(lastName);
+        $("#userEmail").setValue(userEmail);
         // Выбор пола
-        $("#genterWrapper").$(byText("Male")).click();
+        $("#genterWrapper").$(byText(gender)).click();
         // Вводим номер телефона
-        $("#userNumber").setValue("1234567890");
+        $("#userNumber").setValue(userNumber);
         // Вводим дату рождения
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").selectOption("July");
-        $(".react-datepicker__year-select").selectOption("1995");
-        $(".react-datepicker__day--015").click();
+        $(".react-datepicker__month-select").selectOption(birthMonth);
+        $(".react-datepicker__year-select").selectOption(birthYear);
+        $(".react-datepicker__day--0" + birthDay).click();
         // Выбираем предмет
-        $("#subjectsInput").setValue("Biology").pressEnter();
+        $("#subjectsInput").setValue(subject).pressEnter();
         // Выбор хобби
-        $("#hobbiesWrapper").$(byText("Sports")).click();
+        $("#hobbiesWrapper").$(byText(hobby)).click();
         //прокручиваем страницу вниз
         executeJavaScript("window.scrollBy(0, 500)");
         // Загружаем картинку
-        $("#uploadPicture").uploadFromClasspath("images.jpg");
+        $("#uploadPicture").uploadFile(pictureFile);
         // Ввод адреса
-        $("#currentAddress").setValue("Deathclaw st. 69");
+        $("#currentAddress").setValue(currentAddress);
         // Выбор штата
         $("#state").click();
-        $("#state").parent().$(byText("NCR")).click();
+        $("#state").parent().$(byText(state)).click();
         // Выбор города
         $("#city").click();
-        $("#city").parent().$(byText("Delhi")).click();
+        $("#city").parent().$(byText(city)).click();
         //жмем ввод
         $("#submit").scrollTo().click();
+
         //проверки:
         // Проверяем, что модалка открылась
         $("#resultModal").shouldBe(visible);
         // Проверяем каждый элемент
-        $("#resultModal").shouldHave(text("Вася Васин"));
-        $("#resultModal").shouldHave(text("ivan@example.com"));
-        $("#resultModal").shouldHave(text("Male"));
-        $("#resultModal").shouldHave(text("1234567890"));
-        $("#resultModal").shouldHave(text("1995-07-15"));
-        $("#resultModal").shouldHave(text("Biology"));
-        $("#resultModal").shouldHave(text("Sports"));
-        $("#resultModal").shouldHave(text("images.jpg"));
-        $("#resultModal").shouldHave(text("Deathclaw st. 69"));
-        $("#resultModal").shouldHave(text("NCR Delhi"));
+        $("#resultModal").shouldHave(text(fullName));
+        $("#resultModal").shouldHave(text(userEmail));
+        $("#resultModal").shouldHave(text(gender));
+        $("#resultModal").shouldHave(text(userNumber));
+        $("#resultModal").shouldHave(text(fullData));
+        $("#resultModal").shouldHave(text(subject));
+        $("#resultModal").shouldHave(text(hobby));
+        $("#resultModal").shouldHave(text(pictureFileResult));
+        $("#resultModal").shouldHave(text(currentAddress));
+        $("#resultModal").shouldHave(text(stateAndCity));
     }
 
     @Test
@@ -85,21 +88,23 @@ public class MyTests {
         open("/automation-practice-form.html");
         // Закрываем рекламный попап
         closeAdPopup();
+
         // заполняем имя и фамилию
-        $("#firstName").setValue("Вася");
-        $("#lastName").setValue("Васин");
+        $("#firstName").setValue(firstName);
+        $("#lastName").setValue(lastName);
         // Выбор пола
-        $("#genterWrapper").$(byText("Male")).click();
+        $("#genterWrapper").$(byText(gender)).click();
         // Вводим номер телефона
-        $("#userNumber").setValue("1234567890");
+        $("#userNumber").setValue(userNumber);
         //жмем ввод
         $("#submit").scrollTo().click();
+
         // Проверяем, что модалка открылась
         $("#resultModal").shouldBe(visible);
         // Проверяем каждый элемент
-        $("#resultModal").shouldHave(text("Вася Васин"));
-        $("#resultModal").shouldHave(text("Male"));
-        $("#resultModal").shouldHave(text("1234567890"));
+        $("#resultModal").shouldHave(text(fullName));
+        $("#resultModal").shouldHave(text(gender));
+        $("#resultModal").shouldHave(text(userNumber));
         // Закрываем модалку
         $("#closeModal").click();
     }
@@ -109,11 +114,13 @@ public class MyTests {
         open("/automation-practice-form.html");
         // Закрываем рекламный попап
         closeAdPopup();
+
         // заполняем ТОЛЬКО имя и фамилию
-        $("#firstName").setValue("Вася");
-        $("#lastName").setValue("Васин");
+        $("#firstName").setValue(firstName);
+        $("#lastName").setValue(lastName);
         // жмем ввод
         $("#submit").scrollTo().click();
+
         // Модалка не открыласт
         $("#resultModal").shouldNotBe(visible);
         //проверка на наличие ошибки
@@ -125,20 +132,22 @@ public class MyTests {
         open("/automation-practice-form.html");
         // Закрываем рекламный попап
         closeAdPopup();
-        // pfgjkyztv bvz b afvbkb.т
-        $("#firstName").setValue("Вася");
-        $("#lastName").setValue("Васин");
+
+        //ввод имени и фамилии
+        $("#firstName").setValue(firstName);
+        $("#lastName").setValue(lastName);
         // Выбор пола
-        $("#gender-radio-1").parent().click();
+        $("#genterWrapper").$(byText(gender)).click();
         // Вводим короткий номер телефона
-        $("#userNumber").setValue("123890");
+        $("#userNumber").setValue(shortNumber);
         // жмем ввод
         $("#submit").scrollTo().click();
-        // Модалка не открыласт
+
+        // Модалка не открылась
         $("#resultModal").shouldNotBe(visible);
         //проверка на наличие ошибки
         $("#formError").shouldHave(cssClass("error"));
-        $("#formError").shouldHave(text("Please fill required fields and enter a valid 10-digit mobile number"));
+        $("#formError").shouldHave(text(wrongNumberNotice));
         }
 
         @Test
@@ -147,11 +156,11 @@ public class MyTests {
             // Закрываем рекламный попап
             closeAdPopup();
             // Заполянем ТОЛЬКО иммя
-            $("#firstName").setValue("Вася");
+            $("#firstName").setValue(firstName);
             // Выбор пола
             $("#gender-radio-1").parent().click();
             // Вводим номер телефона
-            $("#userNumber").setValue("1234567890");
+            $("#userNumber").setValue(userNumber);
             $("#submit").scrollTo().click();
             // Модалка не появилась
             $("#resultModal").shouldNotBe(visible);
