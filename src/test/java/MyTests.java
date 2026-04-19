@@ -53,7 +53,7 @@ public class MyTests {
         //прокручиваем страницу вниз
         executeJavaScript("window.scrollBy(0, 500)");
         // Загружаем картинку
-        $("#uploadPicture").uploadFile(pictureFile);
+        $("#uploadPicture").uploadFromClasspath(pictureFileName);
         // Ввод адреса
         $("#currentAddress").setValue(currentAddress);
         // Выбор штата
@@ -76,7 +76,7 @@ public class MyTests {
         $("#resultModal").shouldHave(text(fullData));
         $("#resultModal").shouldHave(text(subject));
         $("#resultModal").shouldHave(text(hobby));
-        $("#resultModal").shouldHave(text(pictureFileResult));
+        $("#resultModal").shouldHave(text(pictureFileName));
         $("#resultModal").shouldHave(text(currentAddress));
         $("#resultModal").shouldHave(text(stateAndCity));
     }
