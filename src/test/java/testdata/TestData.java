@@ -1,4 +1,4 @@
-package TestData;
+package testdata;
 
 import java.io.File;
 
@@ -23,5 +23,3 @@ public class TestData {
     public static String stateAndCity = "NCR Delhi";
     public static File pictureFile = new File("src/test/resources/images.jpg");
     public static String pictureFileResult = "images.jpg";
-
-}

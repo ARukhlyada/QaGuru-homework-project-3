@@ -1,13 +1,10 @@
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 
-import static TestData.TestData.*;
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byText;
+import static testdata.TestData.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormTests {
@@ -75,7 +72,6 @@ public class PracticeFormTests {
                 .setPhone(userNumber)
                 .submitForm();
 
-        // Проверки:
         registrationPage
                 .checkModalAppears()
                 .checkResult("Full Name", fullName)
@@ -85,7 +81,7 @@ public class PracticeFormTests {
     }
 
     @Test
-    void negativeTest1 () { //заполнение только имя и фамилию
+    void negativeTest1 () {
         registrationPage
                 .openPage()
                 .closeAdPopup()
@@ -93,7 +89,6 @@ public class PracticeFormTests {
                 .setLastName(lastName)
                 .submitForm();
 
-        // Модалка не открылась
         registrationPage
                 .modalNotAppear()
                 .errorResult(wrongNumberNotice);
@@ -109,14 +104,13 @@ public class PracticeFormTests {
                 .setGender(gender)
                 .setPhone(shortNumber)
                 .submitForm();
-        //проверка
         registrationPage
                 .modalNotAppear()
                 .errorResult(wrongNumberNotice);
     }
 
     @Test
-    void negativeTest3 () { //в системе баг, если не заполнить какое-либо поле, то ошибка будет про некорректный номер, я бы сделал на это автотест, если бы знал какой текст должен был бы быть
+    void negativeTest3 () {
         registrationPage
                 .openPage()
                 .closeAdPopup()
@@ -124,7 +118,6 @@ public class PracticeFormTests {
                 .setGender(gender)
                 .setPhone(userNumber)
                 .submitForm();
-        //проверка
         registrationPage
                 .modalNotAppear()
                 .errorResult(wrongNumberNotice);
