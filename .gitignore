@@ -27,3 +27,9 @@ echo ".gradle/" > .gitignore
 echo ".idea/" >> .gitignore
 echo "build/" >> .gitignore
 echo ".DS_Store" >> .gitignore
+.gradle/
+build/
+gradlew
+gradlew.bat
+.idea/
+*.iml
