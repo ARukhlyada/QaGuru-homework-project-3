@@ -1,29 +1,14 @@
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
+import testdata.TestBase;
 
 import static testdata.TestData.*;
-import static com.codeborne.selenide.Selenide.*;
 
-public class PracticeFormTests {
+public class PracticeFormTests extends TestBase {
 
     private RegistrationPage registrationPage = new RegistrationPage();
 
-    @BeforeAll
-    static void setUp() {
-        Configuration.browserSize = "1920x1080";
-        Configuration.baseUrl = "https://qa-guru.github.io/one-page-form";
-        Configuration.holdBrowserOpen = false;
-    }
-
-    @AfterEach
-    void tearDown() {
-        closeWebDriver();
-        System.gc();
-        System.out.println("Браузер закрыт");
-    }
 
     @Test
     void fillFormWithPopupHandling() {
@@ -38,7 +23,7 @@ public class PracticeFormTests {
                 .setBirthDate(birthMonth, birthYear, birthDay)
                 .setSubject(subject)
                 .setHobby(hobby)
-                .uploadPicture(pictureFileResult)
+                .uploadPicture(pictureFileName)
                 .setAddress(currentAddress)
                 .setState(state)
                 .setCity(city)
@@ -55,7 +40,7 @@ public class PracticeFormTests {
                 .checkResult("Date of Birth", fullData)
                 .checkResult("Subjects", subject)
                 .checkResult("Hobbies", hobby)
-                .checkResult("Picture", pictureFileResult)
+                .checkResult("Picture", pictureFileName)
                 .checkResult("Address", currentAddress)
                 .checkResult("State and City", stateAndCity)
                 .closeModal();

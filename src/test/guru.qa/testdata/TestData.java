@@ -21,5 +21,5 @@ public class TestData {
     public static String state = "NCR";
     public static String city = "Delhi";
     public static String stateAndCity = "NCR Delhi";
-    public static File pictureFile = new File("src/test/resources/images.jpg");
-    public static String pictureFileResult = "images.jpg";
+    public static String pictureFileName = "images.jpg";
+}
