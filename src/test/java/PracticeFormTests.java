@@ -4,6 +4,7 @@ import pages.RegistrationPage;
 import testdata.TestBase;
 
 import static testdata.TestData.*;
+import static testdata.RandomTestData.*;
 
 public class PracticeFormTests extends TestBase {
 
@@ -29,8 +30,6 @@ public class PracticeFormTests extends TestBase {
                 .setCity(city)
                 .submitForm();
 
-
-        //проверки:
         registrationPage
                 .checkModalAppears()
                 .checkResult("Full Name", fullName)
@@ -43,6 +42,54 @@ public class PracticeFormTests extends TestBase {
                 .checkResult("Picture", pictureFileName)
                 .checkResult("Address", currentAddress)
                 .checkResult("State and City", stateAndCity)
+                .closeModal();
+    }
+
+    @Test
+    void fillFormWithRandomData() {
+        String randomFirstName = getRandomFirstName();
+        String randomLastName = getRandomLastName(7);
+        String randomFullName = randomFirstName + " " + randomLastName;
+        String randomEmail = getRandomEmail();
+        String randomPhone = getRandomPhone();
+        String randomGender = getRandomGender();
+        String randomBirthMonth = getRandomBirthMonth();
+        String randomBirthYear = getRandomBirthYear();
+        int randomBirthDay = getRandomBirthDay();
+        String randomSubject = getRandomSubject();
+        String randomHobby = getRandomHobby();
+        String randomState = getRandomState();
+        String randomCity = getRandomCityForState(randomState);
+        String randomAddress = getRandomAddress();
+
+        registrationPage
+                .openPage()
+                .closeAdPopup()
+                .setFirstName(randomFirstName)
+                .setLastName(randomLastName)
+                .setEmail(randomEmail)
+                .setGender(randomGender)
+                .setPhone(randomPhone)
+                .setBirthDate(randomBirthMonth, randomBirthYear, randomBirthDay)
+                .setSubject(randomSubject)
+                .setHobby(randomHobby)
+                .uploadPicture(pictureFileName)
+                .setAddress(randomAddress)
+                .setState(randomState)
+                .setCity(randomCity)
+                .submitForm();
+
+        registrationPage
+                .checkModalAppears()
+                .checkResult("Full Name", randomFullName)
+                .checkResult("Student Email", randomEmail)
+                .checkResult("Gender", randomGender)
+                .checkResult("Mobile", randomPhone)
+                .checkResult("Date of Birth", randomBirthDay + " " + randomBirthMonth + "," + randomBirthYear)
+                .checkResult("Hobbies", randomHobby)
+                .checkResult("Picture", pictureFileName)
+                .checkResult("Address", randomAddress)
+                .checkResult("State and City", randomState + " " + randomCity)
                 .closeModal();
     }
 
