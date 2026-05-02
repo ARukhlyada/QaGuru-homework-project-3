@@ -13,21 +13,15 @@ public class RandomTestData {
     private static final Faker faker = new Faker(new Locale("ru"));
 
     public static String getRandomFirstName() {
-        String[] names = {"Алексей", "Иван", "Петр", "Дмитрий", "Максим", "Андрей", "Сергей", "Владимир"};
-        return names[random.nextInt(names.length)];
+        return faker.name().firstName();
     }
 
     public static String getRandomLastName(int length) {
-        String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        StringBuilder result = new StringBuilder();
-        SecureRandom rnd = new SecureRandom();
-        for (int i = 0; i < length; i++)
-            result.append(LETTERS.charAt(rnd.nextInt(LETTERS.length())));
-        return result.toString();
+        return faker.name().lastName();
     }
 
     public static String getRandomEmail() {
-        return "test_" + System.currentTimeMillis() + "_" + random.nextInt(1000) + "@example.com";
+        return  faker.internet().emailAddress();
     }
 
     public static String getRandomAddress () {
@@ -35,44 +29,43 @@ public class RandomTestData {
     }
 
     public static String getRandomPhone() {
-        StringBuilder phone = new StringBuilder("8");
-        for (int i = 0; i < 9; i++) {
-            phone.append(random.nextInt(10));
-        }
-        return phone.toString();
+        return faker.numerify("##########");
     }
+
     public static String getRandomGender() {
-        String[] genders = {"Male", "Female", "Other"};
-        return genders[random.nextInt(genders.length)];
+        //String[] genders = {"Male", "Female", "Other"};
+        //return genders[random.nextInt(genders.length)];
+        return faker.options().option("Male", "Female", "Other");
     }
 
     public static String getRandomBirthMonth() {
-        String[] months = {"January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"};
-        return months[random.nextInt(months.length)];
+        return faker.options().option(
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+        );
     }
 
     public static String getRandomBirthYear() {
-        return String.valueOf(random.nextInt(1900, 2021));
+        return String.valueOf(faker.number().numberBetween(1900, 2021));
     }
 
     public static int getRandomBirthDay() {
-        int[] days = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-                16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28};
-        return days[random.nextInt(days.length)];
+        return faker.number().numberBetween(1, 29);
     }
 
     public static String getRandomSubject() {
-        String[] subjects = {"Biology", "Chemistry", "Physics", "Maths", "Computer Science", "History", "English"};
-        return subjects[random.nextInt(subjects.length)];
+        //String[] subjects = {"Biology", "Chemistry", "Physics", "Maths", "Computer Science", "History", "English"};
+        //return subjects[random.nextInt(subjects.length)];
+        return faker.options().option("Biology", "Chemistry", "Physics", "Maths", "Computer Science", "History", "English");
     }
 
     public static String getRandomHobby() {
-        String[] hobbies = {"Sports", "Reading", "Music"};
-        return hobbies[random.nextInt(hobbies.length)];
+        //String[] hobbies = {"Sports", "Reading", "Music"};
+        //return hobbies[random.nextInt(hobbies.length)];
+        return faker.options().option("Sports", "Reading", "Music");
     }
 
-    public static String getRandomState() {
+    /*public static String getRandomState() {
         String[] states = {"NCR", "Uttar Pradesh", "Rajasthan", "Haryana"};
         return states[random.nextInt(states.length)];
     }
@@ -93,7 +86,24 @@ public class RandomTestData {
                 return haryanaCities[random.nextInt(haryanaCities.length)];
             default:
                 return "Delhi";
-        }
+        }*/
 
+    public static String getRandomState() {
+        return faker.options().option("NCR", "Uttar Pradesh", "Rajasthan", "Haryana");
+    }
+
+    public static String getRandomCityForState(String state) {
+        switch (state) {
+            case "NCR":
+                return faker.options().option("Delhi", "Gurgaon", "Noida");
+            case "Uttar Pradesh":
+                return faker.options().option("Lucknow", "Agra", "Kanpur");
+            case "Rajasthan":
+                return faker.options().option("Jaipur", "Udaipur", "Jodhpur");
+            case "Haryana":
+                return faker.options().option("Karnal", "Panipat");
+            default:
+                return "Delhi";
+        }
     }
 }
